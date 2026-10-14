@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<AssetPackage Version="1.0.0">
+	<ItemSettings>
+		<ContentType>MISC</ContentType>
+		<Title>Tiger Moth Smoke Annunciator</Title>
+		<Manufacturer/>
+		<Creator>cristian</Creator>
+	</ItemSettings>
+	<Flags>
+		<VisibleInStore>false</VisibleInStore>
+		<CanBeReferenced>false</CanBeReferenced>
+	</Flags>
+	<AssetGroups>
+		<AssetGroup Name="ContentInfo">
+			<Type>Copy</Type>
+			<Flags>
+				<FSXCompatibility>false</FSXCompatibility>
+			</Flags>
+			<AssetDir>PackageDefinitions\zz-tigermoth-smoke-annunciator\ContentInfo\</AssetDir>
+			<OutputDir>ContentInfo\zz-tigermoth-smoke-annunciator\</OutputDir>
+		</AssetGroup>
+		<AssetGroup Name="antsairplanes-tiger-moth">
+			<Type>Copy</Type>
+			<Flags>
+				<FSXCompatibility>false</FSXCompatibility>
+			</Flags>
+			<AssetDir>PackageSources\SimObjects\Airplanes\antsairplanes-tiger-moth\</AssetDir>
+			<OutputDir>SimObjects\Airplanes\antsairplanes-tiger-moth\</OutputDir>
+		</AssetGroup>
+	</AssetGroups>
+</AssetPackage>

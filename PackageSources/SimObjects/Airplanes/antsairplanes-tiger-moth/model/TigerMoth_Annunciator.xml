@@ -1,0 +1,89 @@
+<ModelBehaviors>
+	<!--
+		Tiger Moth smoke annunciator (rear cockpit, on top of the dash).
+
+		Lamps   : red / white / blue light with the real smoke state  (A:SMOKE ENABLE:4 / :5 / :6)
+		          -> the same sim vars the smoke addon's FX components and switch logic use.
+		Switch  : the smoke addon's own intensity control. Its effects (smoke-red/white/blue.spb) read A:G LIMITER SETTING:
+		          0 = intense = LONG (default),  non-zero = less intense = SHORT. The addon maps it to "Toggle G Limiter".
+		          The lever sends K:G_LIMITER_TOGGLE and shows the live value, so it always agrees with the keyboard/joystick binding.
+		          Lever animation 'annunciator_switch' 0..20 : 0 = down = SHORT, 20 = up = LONG.
+		          Also bindable through B:TM_Smoke_Duration_Switch_Set.
+
+		Uses the ANTSDRIFTEREVENTS input-event preset that is defined in AntsTigerMoth_int.xml.
+	-->
+
+	<Template Name="TigerMoth_Annunciator_Lamp">
+		<!-- required: NODE_ID, SMOKE_INDEX.  LAMP_INTENSITY = multiplier of the lamp's own emissive colour when lit (1 = full).
+		     OverrideBaseEmissive FALSE keeps the glTF emissive colour (red / warm white / blue) and only scales it;
+		     TRUE would replace it by a white scalar and wash every lamp out to white. Tune LAMP_INTENSITY to taste. -->
+		<DefaultTemplateParameters>
+			<LAMP_INTENSITY>0.5</LAMP_INTENSITY>
+		</DefaultTemplateParameters>
+		<Component ID="#NODE_ID#" Node="#NODE_ID#">
+			<Material>
+				<EmissiveFactor>
+					<Parameter>
+						<Code>(A:IS USER SIM,bool) (A:SMOKE ENABLE:#SMOKE_INDEX#,bool) &amp;&amp; if{ #LAMP_INTENSITY# } els{ 0 }</Code>
+					</Parameter>
+					<OverrideBaseEmissive>FALSE</OverrideBaseEmissive>
+				</EmissiveFactor>
+			</Material>
+		</Component>
+	</Template>
+
+	<Template Name="TigerMoth_Annunciator">
+		<UseTemplate Name="TigerMoth_Annunciator_Lamp">
+			<NODE_ID>annunciator_lamp_red</NODE_ID>
+			<SMOKE_INDEX>4</SMOKE_INDEX>
+		</UseTemplate>
+		<UseTemplate Name="TigerMoth_Annunciator_Lamp">
+			<NODE_ID>annunciator_lamp_white</NODE_ID>
+			<SMOKE_INDEX>5</SMOKE_INDEX>
+		</UseTemplate>
+		<UseTemplate Name="TigerMoth_Annunciator_Lamp">
+			<NODE_ID>annunciator_lamp_blue</NODE_ID>
+			<SMOKE_INDEX>6</SMOKE_INDEX>
+		</UseTemplate>
+
+		<!-- Toggle lever -->
+		<Component ID="annunciator_switch" Node="annunciator_switch">
+			<UseTemplate Name="ASOBO_GT_Anim_Code">
+				<ANIM_NAME>annunciator_switch</ANIM_NAME>
+				<ANIM_CODE>(A:G LIMITER SETTING,enum) 0 == 20 *</ANIM_CODE>
+				<ANIM_LAG>200</ANIM_LAG>
+				<ANIM_LENGTH>20</ANIM_LENGTH>
+			</UseTemplate>
+		</Component>
+
+		<!-- Click zone -->
+		<Component ID="mousezone_annunciator_switch" Node="mousezone_annunciator_switch">
+			<UseInputEvent ID="ANTSDRIFTEREVENTS">
+				<PRESET_NAME>TM_Smoke_Duration_Switch</PRESET_NAME>
+				<TT_ICON>MOVE_Y</TT_ICON>
+				<TT_INTERACTION>PRIMARY_DOWN</TT_INTERACTION>
+				<TT_INTERACTIONLOCKABLE>LOCK</TT_INTERACTIONLOCKABLE>
+				<TT_DESCRIPTION>'Smoke duration'</TT_DESCRIPTION>
+				<TT_VALUE>(A:G LIMITER SETTING,enum) 0 == if{ 'LONG' } els{ 'SHORT' }</TT_VALUE>
+				<INC_CODE>(A:G LIMITER SETTING,enum) 0 != if{ 1 (&gt;K:G_LIMITER_TOGGLE) }</INC_CODE>
+				<INC_PARAM>p0</INC_PARAM>
+				<DEC_CODE>(A:G LIMITER SETTING,enum) 0 == if{ 1 (&gt;K:G_LIMITER_TOGGLE) }</DEC_CODE>
+				<DEC_PARAM>p0</DEC_PARAM>
+				<SET_CODE>1 (&gt;K:G_LIMITER_TOGGLE)</SET_CODE>
+				<SET_PARAM>p0</SET_PARAM>
+				<VAL_UNITS>number</VAL_UNITS>
+				<VAL_CODE>(A:G LIMITER SETTING,enum)</VAL_CODE>
+				<VAL_INIT>(A:G LIMITER SETTING,enum) (&gt;O:TM_Smoke_Duration)</VAL_INIT>
+				<VAL_SIMVAR>G LIMITER SETTING</VAL_SIMVAR>
+			</UseInputEvent>
+			<UseTemplate Name="ASOBO_GT_Interaction_LeftSingle_Code">
+				<IS_SWITCH>True</IS_SWITCH>
+				<HIGHLIGHT_NODE_ID>annunciator_switch</HIGHLIGHT_NODE_ID>
+				<TOOLTIP_TITLE>'Smoke duration'</TOOLTIP_TITLE>
+				<TOOLTIP_TITLE_IS_DYNAMIC>True</TOOLTIP_TITLE_IS_DYNAMIC>
+				<TOOLTIP_ENTRY_0>TM_Smoke_Duration_Switch</TOOLTIP_ENTRY_0>
+				<LEFT_SINGLE_CODE>1 (&gt;B:TM_Smoke_Duration_Switch_Set)</LEFT_SINGLE_CODE>
+			</UseTemplate>
+		</Component>
+	</Template>
+</ModelBehaviors>
