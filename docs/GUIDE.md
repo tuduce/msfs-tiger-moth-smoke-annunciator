@@ -1,4 +1,4 @@
-# Tiger Moth smoke annunciator – project guide (MSFS 2020)
+# Tiger Moth smoke annunciator – project guide (MSFS 2020 + 2024)
 
 A worn, vintage 60 × 30 × 30 mm box with a **red, white and blue lamp** and a **LONG / SHORT toggle**, mounted on the
 **rear-cockpit dash** (the default pilot seat) of the Ant's Airplanes Tiger Moth, in the wood strip to the left of the airspeed indicator,
@@ -32,6 +32,12 @@ scripts/build.ps1  scripts/install.ps1     full rebuild / install / uninstall
 _reference/                                pristine copy of the base interior LODs (merge input; never edited)
 build/                                     intermediate output and preview renders
 ```
+
+## MSFS 2024
+
+The same package works in MSFS 2024 (verified in the sim: Ants Tiger Moth 1.4.1 + smoke addon 1.1.0): the Ants aircraft is 2020-era legacy content and the
+annunciator edits it the same way. The release installer (`release/install_annunciator.py`) detects 2020 and 2024 Community folders (Store and Steam) and
+installs into either or both. For development, `scripts/install.ps1` still installs into `MSFSCOMMUNITYDIRECTORY`.
 
 ## Everyday use
 
