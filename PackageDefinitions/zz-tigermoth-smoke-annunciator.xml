@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<AssetPackage Version="1.0.0">
+<AssetPackage Version="26.1.0">
 	<ItemSettings>
 		<ContentType>MISC</ContentType>
 		<Title>Tiger Moth Smoke Annunciator</Title>
 		<Manufacturer/>
-		<Creator>cristian</Creator>
+		<Creator>tuduce</Creator>
 	</ItemSettings>
 	<Flags>
 		<VisibleInStore>false</VisibleInStore>

@@ -12,15 +12,16 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 NAME = "zz-tigermoth-smoke-annunciator"
 OUT = os.path.join(ROOT, "Packages", NAME)
 SIM = os.path.join("SimObjects", "Airplanes", "antsairplanes-tiger-moth")
+VERSION = open(os.path.join(ROOT, "VERSION")).read().strip()
 
 MANIFEST = {
     "dependencies": [],
     "content_type": "MISC",
     "title": "Tiger Moth Smoke Annunciator",
     "manufacturer": "",
-    "creator": "cristian",
-    "package_version": "1.0.0",
-    "minimum_game_version": "1.39.12",
+    "creator": "tuduce",
+    "package_version": f"{VERSION}.0",
+    "minimum_game_version": "1.38.2",
     "release_notes": {"neutral": {"LastUpdate": "", "OlderHistory": ""}},
 }
 
